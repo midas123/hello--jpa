@@ -4,6 +4,7 @@ import javax.persistence.EntityManager;
 import javax.persistence.EntityManagerFactory;
 import javax.persistence.EntityTransaction;
 import javax.persistence.Persistence;
+import java.util.List;
 
 public class Unidirectional_1N_Main {
     public static void main(String[] args) {
@@ -23,11 +24,17 @@ public class Unidirectional_1N_Main {
             member.setTeam(team);
             em.persist(member);
 
-            //em.flush();
-            //em.close();
+            em.flush();
+            em.close();
 
             TeamMember findMember = em.find(TeamMember.class, 1L);
-            Team findTeam = mem.getTeam();
+            Team findTeam = member.getTeam();
+
+            List<TeamMember> members = findTeam.getTeamMembers();
+            for(TeamMember m : members){
+                System.out.println(m.getName());
+            }
+
             tx.commit();
 
         } catch (Exception e){
